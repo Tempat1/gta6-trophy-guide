@@ -97,13 +97,41 @@
         : t.priority === 2 ? "Story — unlocks naturally"
         : t.priority === 3 ? "Quick win"
         : "Grind — chip away at it";
-      return '<div class="next-item"><div class="rank">' + (i + 1) + '</div><div><div class="why">' + why + '</div><h3>' + esc(t.name) + ' <span class="badge ' + t.grade + '">' + t.grade + '</span></h3><p>' + esc(t.desc) + " " + esc(t.tip) + "</p></div></div>";
+      return '<div class="next-item" data-id="' + t.id + '" tabindex="0" role="button" aria-label="Go to trophy ' + esc(t.name) + '"><div class="rank">' + (i + 1) + '</div><div><div class="why">' + why + '</div><h3>' + esc(t.name) + ' <span class="badge ' + t.grade + '">' + t.grade + '</span></h3><p>' + esc(t.desc) + " " + esc(t.tip) + "</p></div></div>";
     }).join("");
   }
 
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
+
+  // Copy fallback for browsers/contexts where navigator.clipboard is
+  // unavailable or denied: hidden textarea + document.execCommand("copy").
+  function copyViaTextarea(text) {
+    var ta = null;
+    try {
+      ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.top = "0";
+      ta.style.left = "0";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) {
+      if (ta && ta.parentNode) ta.parentNode.removeChild(ta);
+      return false;
+    }
+  }
+
+  var resetArmed = false;
+  var resetTimer = null;
 
   function renderGrid() {
     var list = filtered();
@@ -190,12 +218,56 @@
       renderAll();
     });
 
-    $("resetBtn").addEventListener("click", function () {
-      if (window.confirm("Reset all trophy progress? This clears every checkmark.")) {
-        earned = {};
-        save();
-        renderAll();
+    // Next Up: click (or Enter/Space) clears search/filters, scrolls to the
+    // trophy card and flash-highlights it.
+    var jumpToTrophy = function (id) {
+      if (!id) return;
+      query = "";
+      $("search").value = "";
+      categoryFilter = "All";
+      $("categorySelect").value = "All";
+      sortMode = "default";
+      $("sortSelect").value = "default";
+      gradePick("All");
+      statusPick("all");
+      renderAll();
+      var card = document.querySelector('.card[data-id="' + id + '"]');
+      if (card) {
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+        card.classList.add("flash");
+        setTimeout(function () { card.classList.remove("flash"); }, 2000);
       }
+    };
+    $("nextList").addEventListener("click", function (e) {
+      var item = e.target.closest ? e.target.closest(".next-item") : null;
+      if (item) jumpToTrophy(item.getAttribute("data-id"));
+    });
+    $("nextList").addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      var item = e.target.closest ? e.target.closest(".next-item") : null;
+      if (item) { e.preventDefault(); jumpToTrophy(item.getAttribute("data-id")); }
+    });
+
+    $("resetBtn").addEventListener("click", function () {
+      var btn = $("resetBtn");
+      if (!resetArmed) {
+        resetArmed = true;
+        btn.textContent = "Sure? Click again to reset";
+        btn.classList.add("armed");
+        resetTimer = setTimeout(function () {
+          resetArmed = false;
+          btn.textContent = "Reset progress";
+          btn.classList.remove("armed");
+        }, 3000);
+        return;
+      }
+      clearTimeout(resetTimer);
+      resetArmed = false;
+      btn.textContent = "Reset progress";
+      btn.classList.remove("armed");
+      earned = {};
+      save();
+      renderAll();
     });
     $("copyBtn").addEventListener("click", function () {
       var done = TROPHIES.filter(isEarned).length;
@@ -203,9 +275,10 @@
       var text = "GTA VI — " + done + "/55 trophies (" + pct + "%)\n" +
         TROPHIES.filter(isEarned).map(function (t) { return "✓ " + t.name + " (" + t.grade + ")"; }).join("\n");
       var doneMsg = function (msg) { $("copyBtn").textContent = msg; setTimeout(function () { $("copyBtn").textContent = "Copy progress summary"; }, 2000); };
+      var tryFallback = function () { doneMsg(copyViaTextarea(text) ? "Copied!" : "Copy failed"); };
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { doneMsg("Copied!"); }, function () { doneMsg("Copy failed"); });
-      } else { doneMsg("Copy not supported"); }
+        navigator.clipboard.writeText(text).then(function () { doneMsg("Copied!"); }, tryFallback);
+      } else { tryFallback(); }
     });
 
     renderAll();

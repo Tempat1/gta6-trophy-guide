@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GTA VI Trophy Guide — All 55 PS5 Trophies &amp; Tracker</title>
+<meta name="description" content="The complete Grand Theft Auto VI trophy guide: all 55 PS5 trophies with official descriptions, grades, how-to-unlock tips, and a progress tracker that saves offline.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Grand Theft Auto VI · PlayStation 5</p>
+    <h1>The GTA VI <span class="gold">Trophy Guide</span></h1>
+    <p class="sub">Every one of the 55 PS5 trophies — 1 Platinum, 2 Gold, 6 Silver, 46 Bronze — with the official description, a how-to-unlock tip, and a tracker that remembers your progress. All single-player, no online trophies, about 200 hours to Platinum (difficulty 4/10). Works fully offline.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="progress-card" aria-label="Your trophy progress">
+    <div class="progress-top">
+      <div class="progress-big"><span id="pctBig">0%</span> · <span id="earnedCount">0</span> / <span id="totalCount">55</span> trophies</div>
+      <div class="progress-points" id="pointsLabel">0 / 1,000 Gamerscore (Xbox equivalent)</div>
+    </div>
+    <div class="progress-bar" role="progressbar" aria-label="Trophy progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="bar-label"><span id="barLabel">0 of 55 trophies earned</span><span>Platinum: Vice Got a Price!</span></div>
+    <div class="grade-chips" id="gradeChips"></div>
+    <div class="cat-bars" id="catBars"></div>
+    <div class="progress-actions">
+      <button type="button" class="btn btn-gold" id="copyBtn">Copy progress summary</button>
+      <button type="button" class="btn btn-danger" id="resetBtn">Reset progress</button>
+    </div>
+    <p class="plat-callout" id="platCallout"></p>
+  </section>
+
+  <section>
+    <h2><span class="sec-num">01</span> Platinum roadmap</h2>
+    <p class="sec-sub">One playthrough is enough. There is no mission replay and no New Game+, so save smart.</p>
+    <div class="warn">⚠ The one missable trophy: Positive Mental Attitude — meditate at all 18 spots. Do Lucia's balcony meditation in Chapter 1 (after the mission Down to Earth, find Lucia at Jason's house in the morning and follow her to the balcony). It is gone once Chapter 1 ends. Keep a manual save at the start of every chapter, plus one from just before the final mission.</div>
+    <div class="steps">
+      <article class="step"><p class="step-label">Step 1 · 60–80 hrs</p><h3>Play the story</h3><p>Complete all five chapters with Jason and Lucia. Story trophies pop automatically — no gold medals needed. Scan vehicles and study animals with the WAiNK app and binoculars as you go: you will need 200 base-model vehicles and 100 animals later.</p></article>
+      <article class="step"><p class="step-label">Step 2 · ~100 hrs</p><h3>Reach 100% completion</h3><p>After the credits, open Progress &gt; Stats &gt; 100% Completion. Finish the robberies, collectibles, races, 42 Shooting Range golds, 42 Drone Time Trials, 300 stunts and 70 of 80 Challenges. This earns A Long Road (Gold), the hardest trophy.</p></article>
+      <article class="step"><p class="step-label">Step 3 · 10–20 hrs</p><h3>Clean up the rest</h3><p>Finish the final missions for Andy, Kenton, Billy, Randy and Tyrone, complete 8 Strangers &amp; Freaks strands, and mop up any remaining combat, driving and misc trophies. Then the Platinum — Vice Got a Price! — is yours.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sec-num">02</span> Next up: what to do first</h2>
+    <p class="sec-sub">Your recommended order, updated live as you check trophies off. The missable one always comes first.</p>
+    <ol class="next-list" id="nextList"></ol>
+  </section>
+
+  <div class="toolbar" role="search">
+    <input type="search" id="search" placeholder="Search trophies…" aria-label="Search trophies">
+    <select id="categorySelect" aria-label="Filter by category">
+      <option value="all">All categories</option>
+      <option>Story</option><option>Exploration</option><option>Combat</option>
+      <option>Driving</option><option>Collectibles</option><option>Side</option><option>Misc</option>
+    </select>
+    <select id="sortSelect" aria-label="Sort trophies">
+      <option value="default">Recommended order</option>
+      <option value="name">Name (A–Z)</option>
+      <option value="grade">Grade (Platinum first)</option>
+      <option value="easiest">Easiest first</option>
+    </select>
+    <div class="pills" id="gradePills" role="group" aria-label="Filter by grade">
+      <button type="button" class="pill active" data-grade="all">All</button>
+      <button type="button" class="pill" data-grade="Platinum">Platinum</button>
+      <button type="button" class="pill" data-grade="Gold">Gold</button>
+      <button type="button" class="pill" data-grade="Silver">Silver</button>
+      <button type="button" class="pill" data-grade="Bronze">Bronze</button>
+    </div>
+    <div class="pills" id="statusPills" role="group" aria-label="Filter by status">
+      <button type="button" class="pill active" data-status="all">All</button>
+      <button type="button" class="pill" data-status="earned">Earned</button>
+      <button type="button" class="pill" data-status="unearned">Not yet earned</button>
+    </div>
+    <label class="spoiler-toggle"><input type="checkbox" id="spoilerToggle"> Hide story spoilers</label>
+    <p class="result-count" id="resultCount">55 of 55 trophies shown</p>
+  </div>
+
+  <section>
+    <h2><span class="sec-num">03</span> All 55 trophies</h2>
+    <p class="sec-sub">Check off each trophy as you earn it — your progress is saved in this browser automatically. Descriptions are the official in-game text; tips are written for this guide.</p>
+    <div class="grid" id="grid"></div>
+    <p class="empty-state" id="emptyState" hidden>No trophies match. Try a different search or clear the filters.</p>
+  </section>
+
+  <section>
+    <h2><span class="sec-num">04</span> Quick answers</h2>
+    <div class="faq">
+      <details><summary>How many trophies does GTA VI have?</summary><p>55 on PS5: 1 Platinum, 2 Gold, 6 Silver and 46 Bronze. The same 55 exist as Xbox achievements worth 1,000 Gamerscore. 28 of them are hidden until you unlock them.</p></details>
+      <details><summary>Can I get the Platinum in one playthrough?</summary><p>Yes. Every trophy is single-player and there are no online trophies. The only risk is Positive Mental Attitude, which is potentially missable in Chapter 1 — keep manual saves at the start of each chapter.</p></details>
+      <details><summary>How long does the Platinum take?</summary><p>About 200 hours, at difficulty 4/10. It is long, not hard: the time goes to 100% completion (A Long Road), 250+ stunts, collectibles and the 42 Shooting Range gold medals. There are no difficulty trophies and no mission medals.</p></details>
+      <details><summary>Do cheats disable trophies?</summary><p>Yes — cheats switch off trophies and saving while active, so never use them on your trophy save. Cheats only become available after the story anyway.</p></details>
+      <details><summary>Does this guide work offline?</summary><p>Yes. It is a static page with no network requests at all — no CDN, no fonts, no images, no analytics. Your checkmarks are stored in this browser's local storage, so they survive reloads.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>GTA VI Trophy Guide — an unofficial fan guide. Grand Theft Auto, GTA and Rockstar Games are trademarks of their respective owners; this guide is not affiliated with or endorsed by Rockstar Games. Trophy names, grades and descriptions are the official in-game list (PSN / Xbox, November 2026). A few hidden trophies' exact unlock methods were still being confirmed by the community at the time of writing — those entries say so in their tip. Progress is stored only in your browser.</p>
+  </div>
+</footer>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
